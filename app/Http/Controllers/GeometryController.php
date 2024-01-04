@@ -21,9 +21,9 @@ class GeometryController extends Controller
      *    operationId="getGeometries",
      *    @OA\Parameter(in="path", name="id", required=true, @OA\Schema(type="string")),
      *    @OA\Response(
-     *         response=200,
-     *         description="OK"
-     *     )
+     *     response=200,
+     *     description="OK"
+     *    )
      * )
      */
     public function show(string $id)
@@ -33,9 +33,11 @@ class GeometryController extends Controller
         $geojson = [
             "type" => "FeatureCollection",
             "features" => [
-                "type" => "Feature",
-                "properties" => ["Title" => $geometry->title],
-                "geometry" => json_decode($geometry->geom->toJson()),
+                [
+                    "type" => "Feature",
+                    "properties" => ["Title" => $geometry->title],
+                    "geometry" => json_decode($geometry->geom->toJson()),
+                ],
             ],
         ];
 
@@ -75,10 +77,10 @@ class GeometryController extends Controller
      *         )
      *      )
      *    ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="OK"
-     *     )
+     *    @OA\Response(
+     *     response=200,
+     *     description="OK"
+     *   )
      * )
      */
     public function store(Request $request)

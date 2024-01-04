@@ -14,9 +14,4 @@ use App\Http\Controllers\GeometryController;
 |
 */
 
-Route::prefix("geometry")->group(function () {
-    Route::get("/{id}", [GeometryController::class, "show"]);
-    Route::post("", [GeometryController::class, "store"]);
-    Route::put("/{id}", [GeometryController::class, "update"]);
-    Route::delete("/{id}", [GeometryController::class, "destroy"]);
-});
+Route::apiResource("geometry", GeometryController::class)->except("index");

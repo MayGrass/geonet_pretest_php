@@ -25,17 +25,6 @@ class GeometryProcessor
         throw new Exception($message);
     }
 
-    private function validateNumber(array $coords): array
-    {
-        try {
-            return array_map(function ($coord) {
-                return array_map("floatval", explode(",", $coord));
-            }, $coords);
-        } catch (Exception $e) {
-            throw $this->validate_error("Invalid points format.");
-        }
-    }
-
     public function validatePoint(): array
     {
         $point = explode(",", $this->points);
@@ -58,7 +47,10 @@ class GeometryProcessor
                 "LineString type expects at least 2 points."
             );
         }
-        return $this->validateNumber($points);
+        return array_map(function ($point) {
+            $geomProcessor = new GeometryProcessor($point);
+            return $geomProcessor->getPoint();
+        }, $points);
     }
 
     public function validatePolygon(): array
@@ -69,7 +61,14 @@ class GeometryProcessor
                 "Polygon type expects at least 4 points and the first and last points must be the same."
             );
         }
-        return $this->validateNumber($polygon);
+        return [
+            new LineString(
+                array_map(function ($point) {
+                    $geomProcessor = new GeometryProcessor($point);
+                    return $geomProcessor->getPoint();
+                }, $polygon)
+            ),
+        ];
     }
 
     public function validateMultiPoint(): array
@@ -84,8 +83,7 @@ class GeometryProcessor
         $singlePoints = [];
         foreach ($points as $point) {
             $geomProcessor = new GeometryProcessor($point);
-            $pointCoords = $geomProcessor->validatePoint();
-            $singlePoints[] = new Point($pointCoords[0], $pointCoords[1]);
+            $singlePoints[] = $geomProcessor->getPoint();
         }
 
         return $singlePoints;
@@ -103,7 +101,7 @@ class GeometryProcessor
         $lines = [];
         foreach ($multiLineString as $line) {
             $geomProcessor = new GeometryProcessor($line);
-            $lines[] = new LineString($geomProcessor->validateLineString());
+            $lines[] = $geomProcessor->getLineString();
         }
 
         return $lines;
@@ -121,7 +119,7 @@ class GeometryProcessor
         $polygons = [];
         foreach ($multiPolygon as $polygon) {
             $geomProcessor = new GeometryProcessor($polygon);
-            $polygons[] = new Polygon($geomProcessor->validatePolygon());
+            $polygons[] = $geomProcessor->getPolygon();
         }
 
         return $polygons;
