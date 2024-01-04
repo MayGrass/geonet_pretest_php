@@ -14,4 +14,9 @@ use App\Http\Controllers\GeometryController;
 |
 */
 
-Route::post("/geometry", [GeometryController::class, "store"]);
+Route::prefix("geometry")->group(function () {
+    Route::get("/{id}", [GeometryController::class, "show"]);
+    Route::post("", [GeometryController::class, "store"]);
+    Route::put("/{id}", [GeometryController::class, "update"]);
+    Route::delete("/{id}", [GeometryController::class, "destroy"]);
+});

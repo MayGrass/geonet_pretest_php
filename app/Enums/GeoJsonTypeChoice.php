@@ -10,4 +10,16 @@ class GeoJsonTypeChoice
     public const MULTIPOINT = "MultiPoint";
     public const MULTILINESTRING = "MultiLineString";
     public const MULTIPOLYGON = "MultiPolygon";
+
+    public static function values(): array
+    {
+        return [
+            self::POINT,
+            self::LINESTRING,
+            self::POLYGON,
+            self::MULTIPOINT,
+            self::MULTILINESTRING,
+            self::MULTIPOLYGON,
+        ];
+    }
 }

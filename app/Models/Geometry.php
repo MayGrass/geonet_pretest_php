@@ -2,22 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
+use MatanYadaev\EloquentSpatial\Objects\Geometry as GeometryObject;
 use App\Enums\GeoJsonTypeChoice;
 
 class Geometry extends Model
 {
-    use HasFactory;
+    use HasSpatial;
 
     protected $table = "geometry";
     protected $fillable = ["type", "title", "geom"];
+
     protected $enumCasts = [
         "type" => GeoJsonTypeChoice::class,
     ];
 
-    public function __toString()
-    {
-        return $this->title;
-    }
+    protected $casts = [
+        "geom" => GeometryObject::class,
+    ];
 }

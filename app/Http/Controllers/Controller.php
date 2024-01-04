@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+/**
+ * @OA\Info(title="GeoNet pretest API", version="dev")
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;

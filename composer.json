@@ -9,8 +9,10 @@
         "darkaonline/l5-swagger": "^8.5",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
+        "laravel/installer": "^5.2",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "matanyadaev/laravel-eloquent-spatial": "^3.2",
         "myclabs/php-enum": "^1.8"
     },
     "require-dev": {
