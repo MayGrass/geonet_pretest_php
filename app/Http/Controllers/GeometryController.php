@@ -83,12 +83,28 @@ class GeometryController extends Controller
      *   )
      * )
      */
+    /**
+     * @response array{"status":true,"message":"success", "id": 1}
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "title" => "required|string",
-            "type" =>
-                "required|in:" . implode(",", GeoJsonTypeChoice::values()),
+            /**
+             * Title of the geometry
+             * @example My Geometry
+             */
+            "title" => ["required", "string"],
+            /**
+             * Type of the geometry
+             */
+            "type" => [
+                "required",
+                "in:" . implode(",", GeoJsonTypeChoice::values()),
+            ],
+            /**
+             * Points data
+             * @example 1,1
+             */
             "points" => "required|string",
         ]);
 
@@ -145,10 +161,17 @@ class GeometryController extends Controller
      *   )
      * )
      */
+    /**
+     * @response array{"status":true,"message":"success"}
+     */
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            "title" => "required|string",
+            /**
+             * Title of the geometry
+             * @example My Geometry
+             */
+            "title" => ["required", "string"],
         ]);
 
         if ($validator->fails()) {
@@ -173,6 +196,9 @@ class GeometryController extends Controller
      *     description="No Content"
      *   )
      * )
+     */
+    /**
+     * @response array{"status":true,"message":"success"}
      */
     public function destroy(string $id)
     {

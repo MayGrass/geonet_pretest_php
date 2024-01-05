@@ -50,7 +50,7 @@ return [
             /*
              * Route for accessing parsed swagger annotations.
             */
-            'docs' => 'docs',
+            'docs' => 'openapi',
 
             /*
              * Route for Oauth2 authentication callback.
