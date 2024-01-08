@@ -16,9 +16,6 @@ class GeometryTest extends TestCase
     {
         parent::setUp();
 
-        // migrate database
-        Artisan::call("migrate");
-
         // create test data
         $this->newGeometry = Geometry::create([
             "title" => "Point test",
