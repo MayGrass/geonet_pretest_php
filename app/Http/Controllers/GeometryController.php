@@ -30,15 +30,9 @@ class GeometryController extends Controller
     {
         $geometry = Geometry::findOrFail($id);
 
-        $geojson = [
-            "type" => "FeatureCollection",
-            "features" => [
-                [
-                    "type" => "Feature",
-                    "properties" => ["Title" => $geometry->title],
-                    "geometry" => json_decode($geometry->geom->toJson()),
-                ],
-            ],
+        $geojson = json_decode($geometry->geom->toFeatureCollectionJson());
+        $geojson->features[0]->properties = [
+            "Title" => $geometry->title,
         ];
 
         return response()->json($geojson);
